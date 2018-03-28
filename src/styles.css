@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Chamando o bootstrap */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+.h1_titulo{
+    color: blue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    
+}
