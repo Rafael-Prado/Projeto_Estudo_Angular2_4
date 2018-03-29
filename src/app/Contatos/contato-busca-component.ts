@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,EventEmitter, OnInit, OnChanges, Output, Input, SimpleChanges, SimpleChange } from '@angular/core';
 import { Router } from '@angular/Router';
 
 import { Subject } from 'rxjs/Subject';
@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Observable';
 import { Contato } from './contato.model';
 import { ContatoService } from './contato.service';
 import { style } from '@angular/core/src/animation/dsl';
-
 
 @Component({
     moduleId: module.id,
@@ -18,8 +17,10 @@ import { style } from '@angular/core/src/animation/dsl';
             }
     `]
 })
-export class ContatoBuscaComponet implements OnInit {
+export class ContatoBuscaComponet implements OnInit, OnChanges {
 
+    @Input()busca: string;
+    @Output() buscaChange: EventEmitter<string> = new EventEmitter<string>();
     contatos: Observable<Contato[]>;
     private TermosDaBusca: Subject<string> = new Subject<string>();
 
@@ -39,9 +40,14 @@ export class ContatoBuscaComponet implements OnInit {
             });
 
     }
+    ngOnChanges(change: SimpleChanges): void{
+        let busca: SimpleChange = change['busca']
+        this.search(busca.currentValue);
+    }
 
     search(termo: string): void {
         this.TermosDaBusca.next(termo);
+        this.buscaChange.emit(termo);
     }
 
     verDetalhes(contato: Contato): void {
