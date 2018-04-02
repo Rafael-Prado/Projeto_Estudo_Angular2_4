@@ -53,5 +53,6 @@ export class ContatoBuscaComponet implements OnInit, OnChanges {
     verDetalhes(contato: Contato): void {
         let link = ['contato/save', contato.id];
         this.router.navigate(link);
+        this.buscaChange.emit('');
     }
 }

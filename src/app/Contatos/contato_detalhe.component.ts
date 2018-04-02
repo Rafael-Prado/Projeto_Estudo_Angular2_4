@@ -28,7 +28,7 @@ export class ContatoDetalhe implements OnInit{
             if(id){
                 
                 this.isNew = false;
-                this.contatoService.getContatosId(id)
+                this.contatoService.find(id)
                     .then((contato: Contato) => {
                         this.contato = contato;
                 });

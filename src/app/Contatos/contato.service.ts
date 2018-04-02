@@ -5,10 +5,12 @@ import { Observable } from "rxjs";
 
 import { CONTATOS } from './contatosMock';
 import { Contato } from './contato.model';
+import { ServiceInterface } from "../Interfaces/service.interface";
+
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class ContatoService{
+export class ContatoService implements ServiceInterface<Contato>{
 
     private urlApi: string = 'app/contatos';
     private headers: Headers = new Headers({'Content-Type': 'aplication/json'});
@@ -17,15 +19,15 @@ export class ContatoService{
         private http: Http
     ){}
 
-    getContatos(): Promise<Contato[]>{
+    findAll(): Promise<Contato[]>{
         return this.http.get(this.urlApi)
             .toPromise()
             .then(response => response.json() as Contato[])
             .catch(this.handleError);
     }
     
-    getContatosId(id: number): Promise<Contato>{
-        return this.getContatos()
+    find(id: number): Promise<Contato>{
+        return this.findAll()
         .then((contatos: Contato[]) => contatos.find(contato => contato.id === id));   
     }
 
